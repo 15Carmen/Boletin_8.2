@@ -226,7 +226,6 @@ public class Tablero {
         StringBuilder stringBuilder = new StringBuilder();
         mostrar();
         stringBuilder.append("¡El tablero está lleno!\n");
-        stringBuilder.append("    ¡No gana nadie!");
         System.out.println(stringBuilder);
     }
 }
