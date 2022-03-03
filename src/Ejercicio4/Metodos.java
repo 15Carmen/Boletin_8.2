@@ -1,5 +1,7 @@
 package Ejercicio4;
 
+import java.util.Scanner;
+
 public class Metodos {
 
     public static final int CERO=0;
@@ -8,6 +10,7 @@ public class Metodos {
     public static final int UNO=1;
     public static final int DOS=2;
 
+    static Scanner sc = new Scanner(System.in);
 
     /**
      * se le pide al usuario por consola que meta un número válido, ha deser impar entre 2 y 9
@@ -17,11 +20,28 @@ public class Metodos {
      * @return el valor del lado entre 2 y 9
      */
     public static int pedirLado() {// no lo he desarrollado por ahora
-        return 9;
+
+        int respuesta;
+        System.out.println("""
+                            Introduzca el tamaño del lado que dessea que tenga el cuadrado.
+                            Debe ser un número impar entre 2 y 9""");
+        respuesta = sc.nextInt();
+
+        if (respuesta%2==0){
+            System.out.println("Número no válido. Introduzca un número impar, por favor");
+            respuesta = sc.nextInt();
+
+        }
+        if (respuesta>9 || respuesta<2){
+            System.out.println("Número no válido. Introduzca un número impar que esté entre 2 y 9");
+            respuesta = sc.nextInt();
+        }
+
+        return respuesta;
     }
 
     /**
-     * se crea un cuadrado de lada el introducido por pantalla
+     * se crea un cuadrado de dado el numero introducido por pantalla
      * precondicion: lado ha de ser un número impar
      *
      * @param lado
@@ -34,7 +54,7 @@ public class Metodos {
     }
 
     /**
-     * se rellena un cuadrado con el método: numeros correlativos a partir del  1 desplazándose desde la posición
+     * se rellena un cuadrado con el método: numeros correlativos a partir del 1 desplazándose desde la posición
      * anterior una fila hacia arriba y una columna hacia la izquierda. Si la nueva posición está ya ocupada,
      * en lugar de desplazarse una fila hacia arriba y una columna hacia la izquierda, se moverá simplemente una
      * fila hacia abajo y continuará el proceso. La matriz cuadrado rellena se devolverá en los propios argumentos de
@@ -42,16 +62,20 @@ public class Metodos {
      * @param cuadrado matriz de lado por lado con el valor 1 en la casilla de la mitad de la primer fila
      */
     public static void rellenarCuadrado(int[][] cuadrado) {
+
         int[] punto=new int[2]; // guardamos la posición original
         int numCasillas;// guardamos el numero de casillas del cuadrado
         int valor=1;//guardamos el ultimo valor introducido en el cuadrado mágico
+
         //montamos el punto de partida
         punto[X]=CERO; //coordenada x del punto original
         punto[Y]=(int)cuadrado.length/DOS;//coordenada y del punto original
         cuadrado[punto[X]] [punto[Y]]=valor;
+
         //calculamos el número de cuadros del cuadrado
         numCasillas= cuadrado.length*cuadrado.length;
         valor++;//ponemos a dos el siguiente valor a introducir en el cuadrado mágico
+
         while (valor<numCasillas) {
             devolverPosicion(punto, cuadrado);
             cuadrado[punto[X]][punto[Y]] = valor;
@@ -71,6 +95,7 @@ public class Metodos {
         int newX,newY;
         newX=punto[CERO]-1;
         newY=punto[UNO]-1;
+
         // VALIDAMOS QUE LAS NUEVAS COORDENADAS NO SE SALEN DE LOS LIMITES DE NUESTRA MATRIZ
         if (newX<CERO){
             newX=cuadrado.length-1;
@@ -98,9 +123,11 @@ public class Metodos {
     }
 
     public static void mostrarCuadrado(int[][] cuadrado) {
+
         StringBuilder stringBuilder=new StringBuilder();
         stringBuilder.append("El cuadrado mágico es el siguiente");
         stringBuilder.append("\n");
+
         for (int elemento[]: cuadrado ) {
             for (int elemento2: elemento){
                 stringBuilder.append(Integer.valueOf(elemento2)+" ");
